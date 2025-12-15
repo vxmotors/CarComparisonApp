@@ -1,0 +1,166 @@
+using CarComparisonApi.Models;
+using CarComparisonApi.Models.DTOs;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Newtonsoft.Json;
+
+namespace CarComparisonApi.Services
+{
+    public class AuthService : IAuthService
+    {
+        private readonly IConfiguration _configuration;
+        private readonly IJsonUserService _userService;
+        private readonly IWebHostEnvironment _environment;
+        private readonly string _usersFilePath;
+
+        public AuthService(IConfiguration configuration, IJsonUserService userService, IWebHostEnvironment environment)
+        {
+            _configuration = configuration;
+            _userService = userService;
+            _environment = environment;
+            _usersFilePath = Path.Combine(environment.ContentRootPath, "Data", "users.json");
+        }
+
+        public async Task<AuthResponse> RegisterAsync(RegisterRequest request)
+        {
+            if (await _userService.UserExistsAsync(request.Login, request.Email))
+                throw new Exception("Користувач з таким логіном або email вже існує");
+
+            string username = await GenerateUniqueUsernameAsync();
+
+            var user = new User
+            {
+                Login = request.Login,
+                Email = request.Email,
+                PasswordHash = HashPassword(request.Password),
+                Username = username,
+                RealName = request.RealName,
+                CreatedAt = DateTime.UtcNow
+            };
+
+            await _userService.CreateUserAsync(user);
+
+            var token = GenerateJwtToken(user);
+
+            return new AuthResponse
+            {
+                Token = token,
+                User = new UserDto
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Username = user.Username,
+                    Email = user.Email,
+                    RealName = user.RealName,
+                    IsAdmin = user.IsAdmin
+                }
+            };
+        }
+
+        public async Task<AuthResponse> LoginAsync(LoginRequest request)
+        {
+            var user = await _userService.GetUserByLoginOrEmailAsync(request.LoginOrEmail);
+            if (user == null || !VerifyPassword(request.Password, user.PasswordHash))
+                throw new Exception("Неправильний логін або пароль");
+
+            user.LastLogin = DateTime.UtcNow;
+            await _userService.UpdateUserAsync(user);
+
+            var token = GenerateJwtToken(user);
+
+            return new AuthResponse
+            {
+                Token = token,
+                User = new UserDto
+                {
+                    Id = user.Id,
+                    Login = user.Login,
+                    Username = user.Username,
+                    Email = user.Email,
+                    RealName = user.RealName,
+                    IsAdmin = user.IsAdmin,
+                    About = user.About,
+                    AvatarUrl = user.AvatarUrl
+                }
+            };
+        }
+
+        private async Task<string> GenerateUniqueUsernameAsync()
+        {
+            var allUsers = await _userService.GetAllUsersAsync();
+            int maxNumber = 0;
+
+            foreach (var user in allUsers)
+            {
+                if (user.Username.StartsWith("NewUser") && int.TryParse(user.Username.Substring(7), out int number))
+                {
+                    if (number > maxNumber)
+                        maxNumber = number;
+                }
+            }
+
+            return $"NewUser{maxNumber + 1}";
+        }
+
+        private string GenerateJwtToken(User user)
+        {
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(
+                _configuration["Jwt:Key"] ?? "your-super-secret-key-32-chars-long-here!"));
+
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Name, user.Login),
+                new Claim("username", user.Username),
+                new Claim(ClaimTypes.Email, user.Email)
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: _configuration["Jwt:Issuer"],
+                audience: _configuration["Jwt:Audience"],
+                claims: claims,
+                expires: DateTime.UtcNow.AddDays(7),
+                signingCredentials: new SigningCredentials(key, SecurityAlgorithms.HmacSha256));
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        private string HashPassword(string password)
+        {
+            using var sha256 = System.Security.Cryptography.SHA256.Create();
+            var bytes = Encoding.UTF8.GetBytes(password);
+            var hash = sha256.ComputeHash(bytes);
+            return Convert.ToBase64String(hash);
+        }
+
+        private bool VerifyPassword(string password, string passwordHash)
+        {
+            var hash = HashPassword(password);
+            return hash == passwordHash;
+        }
+
+        public async Task<User?> GetUserByIdAsync(int id)
+        {
+            try
+            {
+                Console.WriteLine($"GetUserByIdAsync called with id: {id}");
+                var user = await _userService.GetUserByIdAsync(id);
+                Console.WriteLine($"User found: {user != null}");
+                return user;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetUserByIdAsync: {ex.Message}");
+                return null;
+            }
+        }
+
+        public async Task<User?> GetUserByLoginAsync(string login)
+        {
+            return await _userService.GetUserByLoginAsync(login);
+        }
+    }
+}

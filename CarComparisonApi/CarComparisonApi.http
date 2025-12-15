@@ -1,0 +1,144 @@
+@CarComparisonApi_HostAddress = http://localhost:5068
+@ContentType = application/json
+
+### 1. ÒÅÑÒÎÂÈÉ ÅÍÄÏÎ²ÍÒ
+GET {{CarComparisonApi_HostAddress}}/api/test
+Accept: {{ContentType}}
+
+### 2. ÎÒĞÈÌÀÒÈ ÂÑ² ÌÀĞÊÈ ÀÂÒÎ (R1.2)
+GET {{CarComparisonApi_HostAddress}}/api/cars/brands
+Accept: {{ContentType}}
+
+### 3. ÏÎØÓÊ ÀÂÒÎÌÎÁ²Ë²Â (R1.1)
+GET {{CarComparisonApi_HostAddress}}/api/cars/search?brand=Toyota
+Accept: {{ContentType}}
+
+### 4. ÏÎØÓÊ Ç Ô²ËÜÒĞÀÌÈ
+GET {{CarComparisonApi_HostAddress}}/api/cars/search?bodyType=Ñåäàí&transmission=Àâòîìàòè÷íà
+Accept: {{ContentType}}
+
+### 5. ÎÒĞÈÌÀÒÈ ÊÎÍÊĞÅÒÍÓ ÌÀĞÊÓ
+GET {{CarComparisonApi_HostAddress}}/api/cars/brands/1
+Accept: {{ContentType}}
+
+### 6. ÎÒĞÈÌÀÒÈ ÌÎÄÅË² ÌÀĞÊÈ
+GET {{CarComparisonApi_HostAddress}}/api/cars/brands/1/models
+Accept: {{ContentType}}
+
+### 7. ÎÒĞÈÌÀÒÈ ÊÎÌÏËÅÊÒÀÖ²Ş (R1.10)
+GET {{CarComparisonApi_HostAddress}}/api/cars/trims/1
+Accept: {{ContentType}}
+
+### 8. ÎÒĞÈÌÀÒÈ ÒÅÕÍ²×Í² ÕÀĞÀÊÒÅĞÈÑÒÈÊÈ
+GET {{CarComparisonApi_HostAddress}}/api/cars/trims/1/technical-details
+Accept: {{ContentType}}
+
+### 9. ÏÎĞ²ÂÍßÍÍß ÀÂÒÎ (R1.3, R2.6)
+GET {{CarComparisonApi_HostAddress}}/api/comparison/compare?trimIds=1,2
+Accept: {{ContentType}}
+
+### 10. ĞÅªÑÒĞÀÖ²ß ÊÎĞÈÑÒÓÂÀ×À (R1.4, R1.5, R1.6, R1.7)
+POST {{CarComparisonApi_HostAddress}}/api/auth/register
+Content-Type: {{ContentType}}
+
+{
+  "login": "testuser",
+  "email": "test@example.com",
+  "username": "testuser",
+  "password": "Test1234",
+  "realName": "Òåñò Êîğèñòóâà÷"
+}
+
+### 11. ÀÂÒÎĞÈÇÀÖ²ß ÊÎĞÈÑÒÓÂÀ×À (R1.4)
+POST {{CarComparisonApi_HostAddress}}/api/auth/login
+Content-Type: {{ContentType}}
+
+{
+  "username": "admin",
+  "password": "Admin123!"
+}
+
+### 12. ÇÀÏÈÒ Ç ÒÎÊÅÍÎÌ (ïîòğ³áíî ñïî÷àòêó àâòîğèçóâàòèñÿ ³ ñêîï³şâàòè òîêåí)
+@authToken = âàø_òîêåí_òóò
+
+### 13. ÎÒĞÈÌÀÒÈ ²ÍÔÎĞÌÀÖ²Ş ÏĞÎ ÏÎÒÎ×ÍÎÃÎ ÊÎĞÈÑÒÓÂÀ×À
+GET {{CarComparisonApi_HostAddress}}/api/auth/me
+Authorization: Bearer {{authToken}}
+Accept: {{ContentType}}
+
+### 14. ÎÒĞÈÌÀÒÈ Â²ÄÃÓÊÈ ÄËß ÊÎÌÏËÅÊÒÀÖ²¯ (R1.8)
+GET {{CarComparisonApi_HostAddress}}/api/reviews/trim/1
+Accept: {{ContentType}}
+
+### 15. ÑÒÂÎĞÈÒÈ Â²ÄÃÓÊ (R1.8) - ïîòğåáóº òîêåí
+POST {{CarComparisonApi_HostAddress}}/api/reviews
+Authorization: Bearer {{authToken}}
+Content-Type: {{ContentType}}
+
+{
+  "trimId": 1,
+  "content": "Äóæå õîğîøèé àâòîìîá³ëü, ğåêîìåíäóş!",
+  "rating": 9
+}
+
+### 16. ÎÒĞÈÌÀÒÈ ÎÁĞÀÍÅ (R2.4) - ïîòğåáóº òîêåí
+GET {{CarComparisonApi_HostAddress}}/api/favorites
+Authorization: Bearer {{authToken}}
+Accept: {{ContentType}}
+
+### 17. ÄÎÄÀÒÈ Â ÎÁĞÀÍÅ (R2.4) - ïîòğåáóº òîêåí
+POST {{CarComparisonApi_HostAddress}}/api/favorites
+Authorization: Bearer {{authToken}}
+Content-Type: {{ContentType}}
+
+{
+  "trimId": 1
+}
+
+### 18. ÏÅĞÅÂ²ĞÈÒÈ, ×È Â ÎÁĞÀÍÎÌÓ
+GET {{CarComparisonApi_HostAddress}}/api/favorites/check/1
+Authorization: Bearer {{authToken}}
+Accept: {{ContentType}}
+
+### 19. ÂÈÄÀËÈÒÈ Ç ÎÁĞÀÍÎÃÎ
+DELETE {{CarComparisonApi_HostAddress}}/api/favorites/by-trim/1
+Authorization: Bearer {{authToken}}
+
+### 20. ÎÍÎÂÈÒÈ ÏĞÎÔ²ËÜ ÊÎĞÈÑÒÓÂÀ×À (R2.5) - ïîòğåáóº òîêåí
+PUT {{CarComparisonApi_HostAddress}}/api/users/profile
+Authorization: Bearer {{authToken}}
+Content-Type: {{ContentType}}
+
+{
+  "realName": "Îíîâëåíå ²ì'ÿ",
+  "about": "Òåñòîâèé îïèñ ïğîô³ëş",
+  "avatarUrl": "/avatars/test.jpg"
+}
+
+### 21. ÎÒĞÈÌÀÒÈ ÏĞÎÔ²ËÜ ÊÎĞÈÑÒÓÂÀ×À (ïóáë³÷íèé)
+GET {{CarComparisonApi_HostAddress}}/api/users/1
+Accept: {{ContentType}}
+
+### 22. ÏÎØÓÊ Ç ÓÑ²ÌÀ ÏÀĞÀÌÅÒĞÀÌÈ
+GET {{CarComparisonApi_HostAddress}}/api/cars/search?brand=Toyota&model=Camry&generation=XV70&minYear=2015&maxYear=2024&bodyType=Ñåäàí&transmission=Àâòîìàòè÷íà&fuelType=Áåíçèí
+Accept: {{ContentType}}
+
+### 23. ÏÎĞ²ÂÍßÍÍß 3 ÀÂÒÎ
+GET {{CarComparisonApi_HostAddress}}/api/comparison/compare?trimIds=1,2,3
+Accept: {{ContentType}}
+
+### 24. ÏÎĞ²ÂÍßÍÍß 4 ÀÂÒÎ (ìàêñèìóì)
+GET {{CarComparisonApi_HostAddress}}/api/comparison/compare?trimIds=1,2,3,4
+Accept: {{ContentType}}
+
+### 25. ÎÒĞÈÌÀÒÈ ÏÎÊÎË²ÍÍß ÌÎÄÅË²
+GET {{CarComparisonApi_HostAddress}}/api/models/1/generations
+Accept: {{ContentType}}
+
+### 26. ÎÒĞÈÌÀÒÈ ÊÎÌÏËÅÊÒÀÖ²¯ ÏÎÊÎË²ÍÍß
+GET {{CarComparisonApi_HostAddress}}/api/generations/1/trims
+Accept: {{ContentType}}
+
+### 27. ÎÒĞÈÌÀÒÈ Â²ÄÃÓÊÈ ÊÎĞÈÑÒÓÂÀ×À
+GET {{CarComparisonApi_HostAddress}}/api/reviews/user/1
+Accept: {{ContentType}}

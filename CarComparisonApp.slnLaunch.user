@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "CarComparisonApi\\CarComparisonApi.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "CarComparisonClient\\carcomparisonclient.esproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

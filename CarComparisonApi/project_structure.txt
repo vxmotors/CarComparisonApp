@@ -1,0 +1,144 @@
+Folder PATH listing for volume ÕÓ‚ËÈ ÚÓÏ
+Volume serial number is 967E-F6B9
+D:.
+¶   appsettings.Development.json
+¶   appsettings.json
+¶   CarComparisonApi.csproj
+¶   CarComparisonApi.http
+¶   Program.cs
+¶   project_structure.txt
+¶   
++---bin
+¶   +---Debug
+¶   ¶   L---net8.0
+¶   ¶       ¶   appsettings.Development.json
+¶   ¶       ¶   appsettings.json
+¶   ¶       ¶   BCrypt.Net-Next.dll
+¶   ¶       ¶   CarComparisonApi.deps.json
+¶   ¶       ¶   CarComparisonApi.dll
+¶   ¶       ¶   CarComparisonApi.exe
+¶   ¶       ¶   CarComparisonApi.pdb
+¶   ¶       ¶   CarComparisonApi.runtimeconfig.json
+¶   ¶       ¶   CarComparisonApi.staticwebassets.endpoints.json
+¶   ¶       ¶   Microsoft.AspNetCore.Authentication.JwtBearer.dll
+¶   ¶       ¶   Microsoft.AspNetCore.JsonPatch.dll
+¶   ¶       ¶   Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+¶   ¶       ¶   Microsoft.IdentityModel.Abstractions.dll
+¶   ¶       ¶   Microsoft.IdentityModel.JsonWebTokens.dll
+¶   ¶       ¶   Microsoft.IdentityModel.Logging.dll
+¶   ¶       ¶   Microsoft.IdentityModel.Protocols.dll
+¶   ¶       ¶   Microsoft.IdentityModel.Protocols.OpenIdConnect.dll
+¶   ¶       ¶   Microsoft.IdentityModel.Tokens.dll
+¶   ¶       ¶   Newtonsoft.Json.Bson.dll
+¶   ¶       ¶   Newtonsoft.Json.dll
+¶   ¶       ¶   System.IdentityModel.Tokens.Jwt.dll
+¶   ¶       ¶   
+¶   ¶       L---Data
+¶   ¶               cars.json
+¶   ¶               users.json
+¶   ¶               
+¶   L---Release
+¶       L---net8.0
++---Controllers
+¶       AuthController.cs
+¶       CarsController.cs
+¶       ComparisonController.cs
+¶       FavoritesController.cs
+¶       ReviewsController.cs
+¶       TestController.cs
+¶       UsersController.cs
+¶       
++---Data
+¶       cars.json
+¶       users.json
+¶       
++---Models
+¶   ¶   CarBrand.cs
+¶   ¶   CarModel.cs
+¶   ¶   Favorite.cs
+¶   ¶   Generation.cs
+¶   ¶   Review.cs
+¶   ¶   TechnicalDetails.cs
+¶   ¶   TestResponse.cs
+¶   ¶   Trim.cs
+¶   ¶   User.cs
+¶   ¶   
+¶   L---DTOs
+¶           BrandDto.cs
+¶           GenerationCardDto.cs
+¶           GenerationWithTrimsDto.cs
+¶           LoginRequest.cs
+¶           ModelDto.cs
+¶           RegisterRequest.cs
+¶           TrimFullDto.cs
+¶           UserDto.cs
+¶           
++---obj
+¶   ¶   CarComparisonApi.csproj.nuget.dgspec.json
+¶   ¶   CarComparisonApi.csproj.nuget.g.props
+¶   ¶   CarComparisonApi.csproj.nuget.g.targets
+¶   ¶   project.assets.json
+¶   ¶   project.nuget.cache
+¶   ¶   
+¶   +---Debug
+¶   ¶   L---net8.0
+¶   ¶       ¶   .NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+¶   ¶       ¶   ApiEndpoints.json
+¶   ¶       ¶   apphost.exe
+¶   ¶       ¶   CarCompa.7C8B15F5.Up2Date
+¶   ¶       ¶   CarComparisonApi.AssemblyInfo.cs
+¶   ¶       ¶   CarComparisonApi.AssemblyInfoInputs.cache
+¶   ¶       ¶   CarComparisonApi.assets.cache
+¶   ¶       ¶   CarComparisonApi.csproj.AssemblyReference.cache
+¶   ¶       ¶   CarComparisonApi.csproj.BuildWithSkipAnalyzers
+¶   ¶       ¶   CarComparisonApi.csproj.CoreCompileInputs.cache
+¶   ¶       ¶   CarComparisonApi.csproj.FileListAbsolute.txt
+¶   ¶       ¶   CarComparisonApi.dll
+¶   ¶       ¶   CarComparisonApi.GeneratedMSBuildEditorConfig.editorconfig
+¶   ¶       ¶   CarComparisonApi.genruntimeconfig.cache
+¶   ¶       ¶   CarComparisonApi.GlobalUsings.g.cs
+¶   ¶       ¶   CarComparisonApi.MvcApplicationPartsAssemblyInfo.cache
+¶   ¶       ¶   CarComparisonApi.pdb
+¶   ¶       ¶   rjsmcshtml.dswa.cache.json
+¶   ¶       ¶   rjsmrazor.dswa.cache.json
+¶   ¶       ¶   rpswa.dswa.cache.json
+¶   ¶       ¶   staticwebassets.build.endpoints.json
+¶   ¶       ¶   staticwebassets.build.json
+¶   ¶       ¶   staticwebassets.build.json.cache
+¶   ¶       ¶   staticwebassets.references.upToDateCheck.txt
+¶   ¶       ¶   staticwebassets.removed.txt
+¶   ¶       ¶   swae.build.ex.cache
+¶   ¶       ¶   
+¶   ¶       +---ref
+¶   ¶       ¶       CarComparisonApi.dll
+¶   ¶       ¶       
+¶   ¶       +---refint
+¶   ¶       ¶       CarComparisonApi.dll
+¶   ¶       ¶       
+¶   ¶       L---staticwebassets
+¶   L---Release
+¶       L---net8.0
+¶           ¶   .NETCoreApp,Version=v8.0.AssemblyAttributes.cs
+¶           ¶   CarComparisonApi.AssemblyInfo.cs
+¶           ¶   CarComparisonApi.AssemblyInfoInputs.cache
+¶           ¶   CarComparisonApi.assets.cache
+¶           ¶   CarComparisonApi.csproj.AssemblyReference.cache
+¶           ¶   CarComparisonApi.GeneratedMSBuildEditorConfig.editorconfig
+¶           ¶   CarComparisonApi.GlobalUsings.g.cs
+¶           ¶   
+¶           +---ref
+¶           L---refint
++---Properties
+¶       launchSettings.json
+¶       
+L---Services
+        AuthService.cs
+        CarService.cs
+        FavoriteService.cs
+        IAuthService.cs
+        ICarService.cs
+        IFavoriteService.cs
+        IReviewService.cs
+        JsonUserService.cs
+        ReviewService.cs
+        
